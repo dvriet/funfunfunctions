@@ -4,7 +4,23 @@ sql:
 ---
 
 ```sql id=idpop display
-SELECT population FROM nations WHERE name='Netherlands'
+SELECT population, lifeExpectancy FROM nations WHERE name='Netherlands'
+```
+
+```js
+const p = JSON.parse(idpop);
+const population = p[0].population;
+const lifeExpectancy = p[0].lifeExpectancy;
+
+const g1 = Plot.plot({
+    x: {grid: true, label: "year", transform: (d) => d, tickFormat: d3.format('.0f')},
+    y: {grid: true, label:"population (x1.000.000)", transform: (d) => d / 1e6, tickFormat: d3.format('.0f')},
+    marks:[
+        Plot.line(population)
+    ]
+});
+
+display(g1);
 ```
 
 ```js
@@ -12,15 +28,15 @@ const p = JSON.parse(idpop);
 const r = p[0].population;
 // const g = Plot.line(r).plot();
 
-const g = Plot.plot({
+const g2 = Plot.plot({
     x: {grid: true, label: "year", transform: (d) => d, tickFormat: d3.format('.0f')},
-    y: {grid: true, label:"population (x1.000.000)", transform: (d) => d / 1e6, tickFormat: d3.format('.0f')},
+    y: {grid: true, label:"life expectancy", transform: (d) => d / 1, tickFormat: d3.format('.0f')},
     marks:[
-        Plot.line(r)
+        Plot.line(lifeExpectancy)
     ]
 });
 
-display(g);
+display(g2);
 ```
 
 
